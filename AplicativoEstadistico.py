@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
 import statistics
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 class AplicativoEstadistico:
     def __init__(self, root):
@@ -64,6 +64,8 @@ class AplicativoEstadistico:
         messagebox.showinfo("Medidas de Tendencia Central",
                             f"Moda: {moda}\nMediana: {mediana}\nMedia: {media}")
 
+    
+
     def calcular_posicion(self):
         if len(self.data) == 0:
             messagebox.showerror("Error", "No se han ingresado datos.")
@@ -76,12 +78,13 @@ class AplicativoEstadistico:
         try:
             posicion = float(posicion_str)
             if 0 <= posicion <= 1:
-                valor = statistics.quantiles(self.data, [posicion])[0]
+                valor = np.percentile(self.data, posicion * 100)
                 messagebox.showinfo("Medidas de Posición", f"Valor en la posición {posicion}: {valor}")
             else:
                 messagebox.showerror("Error", "Posición inválida. Debe ser un valor entre 0 y 1.")
         except ValueError:
             messagebox.showerror("Error", "Posición inválida. Debe ser un número entre 0 y 1.")
+
 
     def calcular_dispercion(self):
         if len(self.data) == 0:
